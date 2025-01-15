@@ -1,0 +1,30 @@
+
+services:
+  backend:
+    build:
+      context: ./pruebapractica
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: backend-container
+    networks:
+      - app-network
+    volumes:
+      - ./pruebapractica/target:/app
+
+  frontend:
+    build:
+      context: ./frontend-pruebapractica
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    container_name: frontend-container
+    networks:
+      - app-network
+    volumes:
+      # Mapeo del dist de Angular
+      - ./frontend-pruebapractica/dist/frontend-pruebapractica/browser:/usr/share/nginx/html
+
+networks:
+  app-network:
+    driver: bridge
